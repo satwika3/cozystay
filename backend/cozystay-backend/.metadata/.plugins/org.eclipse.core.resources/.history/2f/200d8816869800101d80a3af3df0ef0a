@@ -1,0 +1,5 @@
+package com.cozystay.repository;
+
+public interface BookingRepository {
+
+}

@@ -1,0 +1,5 @@
+package com.cozystay.model;
+
+public class Hotel {
+
+}
