@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+// Match your Spring Boot port 8084
 const API_BASE_URL = 'http://localhost:8084/api';
 
 const Login = ({ onLogin }) => {
@@ -13,6 +14,7 @@ const Login = ({ onLogin }) => {
     phone: ''
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,10 +28,14 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      const url = `${API_BASE_URL}${endpoint}`;
+      console.log('Making request to:', url);
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,11 +48,14 @@ const Login = ({ onLogin }) => {
         onLogin(userData);
         navigate('/');
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Authentication failed');
+        const errorText = await response.text();
+        setError(errorText || `Authentication failed (Status: ${response.status}). Please try again.`);
       }
     } catch (error) {
-      setError('Network error. Please try again.');
+      setError(`Cannot connect to backend server at ${API_BASE_URL}. Make sure Spring Boot is running on port 8084.`);
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,6 +78,7 @@ const Login = ({ onLogin }) => {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                 </div>
               )}
@@ -81,6 +91,7 @@ const Login = ({ onLogin }) => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                 />
               </div>
               
@@ -93,6 +104,7 @@ const Login = ({ onLogin }) => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                   />
                 </div>
               )}
@@ -106,11 +118,16 @@ const Login = ({ onLogin }) => {
                   onChange={handleChange}
                   required
                   minLength="6"
+                  disabled={isLoading}
                 />
               </div>
               
-              <button type="submit" className="btn login-btn">
-                {isLogin ? 'Login' : 'Create Account'}
+              <button 
+                type="submit" 
+                className="btn login-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}
               </button>
             </form>
             
@@ -121,6 +138,7 @@ const Login = ({ onLogin }) => {
                   type="button" 
                   className="switch-btn"
                   onClick={() => setIsLogin(!isLogin)}
+                  disabled={isLoading}
                 >
                   {isLogin ? 'Sign up' : 'Login'}
                 </button>

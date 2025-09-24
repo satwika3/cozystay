@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './BookingForm.css';
-
 const API_BASE_URL = 'http://localhost:8084/api';
 
 const BookingForm = ({ user }) => {
