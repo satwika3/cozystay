@@ -1,0 +1,5 @@
+package com.cozystay.config;
+
+public class CorsConfig {
+
+}

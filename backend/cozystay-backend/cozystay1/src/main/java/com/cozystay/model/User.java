@@ -11,15 +11,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank
+    @NotBlank(message = "Name is required")
     private String name;
     
     @Email
-    @NotBlank
+    @NotBlank(message = "Email is required")
     @Column(unique = true)
     private String email;
     
-    @NotBlank
+    @NotBlank(message = "Password is required")
     private String password;
     
     private String phone;
@@ -27,9 +27,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     
-    // Constructors, Getters, and Setters
+    // Default constructor
     public User() {}
     
+    // Constructor with parameters
     public User(String name, String email, String password, UserRole role) {
         this.name = name;
         this.email = email;
@@ -41,7 +42,7 @@ public class User {
         CUSTOMER, ADMIN
     }
     
-    // Getters and Setters
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     
