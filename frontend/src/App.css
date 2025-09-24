@@ -123,4 +123,77 @@ body {
     padding: 10px 20px;
     font-size: 14px;
   }
+  /* Demo Mode Banner */
+.demo-banner {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #2d3748;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ecc94b;
+}
+
+.demo-banner .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.demo-icon {
+  font-size: 1.2rem;
+}
+
+.demo-banner a {
+  color: #2b6cb0;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.demo-banner a:hover {
+  color: #2c5282;
+}
+
+.banner-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #4a5568;
+  margin-left: auto;
+}
+
+.banner-close:hover {
+  color: #2d3748;
+}
+
+/* Error Banner */
+.error-banner {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 1rem 0;
+  border-bottom: 1px solid #feb2b2;
+}
+
+.error-banner .container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #e53e3e;
+  margin-left: auto;
+}
+
+.error-close:hover {
+  color: #c53030;
+}
 }
