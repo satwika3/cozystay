@@ -3,11 +3,23 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/cozystay/', // ⚠️ Ensure this has trailing slash
+  
+  build: {
+    // Add this to ensure proper asset handling
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]'
+      }
+    }
+  },
+  
   server: {
-    port: 3000, // Force React to run on port 3000
+    port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8084', // Your Spring Boot port
+        target: 'http://localhost:8084',
         changeOrigin: true,
         secure: false,
       }
