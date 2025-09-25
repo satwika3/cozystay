@@ -1,9 +1,9 @@
 {
   "name": "cozystay",
   "version": "1.0.0",
-  "private": true,
-  "homepage": "https://satwika3.github.io/cozystay",
   "type": "module",
+  "homepage": "https://satwika3.github.io/cozystay",
+  
   
   "scripts": {
     "dev": "vite",
