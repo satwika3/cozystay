@@ -1,0 +1,42 @@
+- hosts: server
+  become: yes
+  tasks:
+
+    - name: Install Java 17
+      apt:
+        name: openjdk-17-jdk
+        state: present
+        update_cache: yes
+
+    - name: Install Maven
+      apt:
+        name: maven
+        state: present
+        update_cache: yes
+
+    - name: Create backend folder on server
+      file:
+        path: /opt/backend
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+
+    - name: Copy Backend Spring Boot project to server
+      copy:
+        src: ../cozystay1/
+        dest: /opt/backend/
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+
+    - name: Build Spring Boot project using Maven
+      shell: mvn clean package -DskipTests
+      args:
+        chdir: /opt/backend/
+
+    - name: Stop existing Spring Boot app if running
+      shell: pkill -f "java -jar" || true
+
+    - name: Run Spring Boot JAR
+      shell: nohup java -jar /opt/backend/target/*.jar > /opt/backend/log.txt 2>&1 &
